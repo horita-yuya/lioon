@@ -1,3 +1,5 @@
+![Lioon logo](lioon.png)
+
 # lioon
 
 A lightweight, type-safe internationalization (i18n) library for React applications with a simple template literal-based API.
