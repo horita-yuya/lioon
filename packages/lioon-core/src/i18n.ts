@@ -3,30 +3,20 @@ export type I18n = (
   ...values: unknown[]
 ) => string;
 
-export interface TranslationDict {
+export type TranslationDict = {
   [locale: string]: {
     [key: string]: string;
   };
-}
-
-const BUILD_MODE =
-  typeof process !== "undefined" ? process.env.BUILD_MODE : false;
+};
 
 export function createI18n(
   translations: TranslationDict,
   locale: string,
-  keyPrefix: string,
 ): I18n {
   return (strings: TemplateStringsArray, ...values: unknown[]): string => {
     const template = strings.raw.join("{{}}").trim();
-    const key = `${keyPrefix}${template}`;
-
-    if (BUILD_MODE) {
-      return template;
-    } else {
-      const translatedTemplate = translations[key]?.[locale] || template;
-      return formatTemplateWithValues(translatedTemplate, values);
-    }
+    const translatedTemplate = translations[locale]?.[template] || template;
+    return formatTemplateWithValues(translatedTemplate, values);
   };
 }
 

@@ -7,7 +7,6 @@ export type LioonVitePluginOptions<
   Locales extends string,
 > = {
   outputDir: string;
-  defaultLocale: NoInfer<Locales>;
   supportedLocales: Locales[];
   translate?: (
     templates: Template[],
@@ -41,10 +40,7 @@ export default function lioonVitePlugin<
             const supported = Object.fromEntries(
               supportedLocales.map((locale) => [locale, ""]),
             );
-            return [
-              template,
-              { ...supported, [options.defaultLocale]: template },
-            ] as const;
+            return [template, { ...supported, default: template }] as const;
           });
 
           writeTranslation(absoluteOutputDir, defaultTemplates);

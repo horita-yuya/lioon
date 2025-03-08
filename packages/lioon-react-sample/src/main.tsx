@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
-import React from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
 
-// biome-ignore lint/style/noNonNullAssertion: <explanation>
-createRoot(document.getElementById("root")!).render(
+hydrateRoot(
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
+  document.getElementById("root")!,
   <StrictMode>
     <App />
   </StrictMode>,

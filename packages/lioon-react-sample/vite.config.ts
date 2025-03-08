@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     lioonVitePlugin({
       outputDir: "src/generated/i18n",
-      defaultLocale: "en",
       supportedLocales: ["en", "ja"],
     }),
   ],
