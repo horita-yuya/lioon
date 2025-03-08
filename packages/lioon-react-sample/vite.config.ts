@@ -6,12 +6,15 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    outDir: "lp",
+  },
   plugins: [
     react(),
     tailwindcss(),
     lioonVitePlugin({
-      outputDir: "src/generated/i18n",
-      supportedLocales: ["en", "ja"],
+      outputDir: "src/i18n",
+      supportedLocales: ["en", "ja", "ko", "zh", "es"],
     }),
   ],
   resolve: {
