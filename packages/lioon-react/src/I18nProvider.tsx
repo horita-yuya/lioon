@@ -4,14 +4,14 @@ import React, { createContext, type ReactNode } from "react";
 export interface I18nContextValue {
   translations: TranslationDict;
   locale: string;
-  defaultLocale: string;
-  componentName?: string;
-  isBuildMode: boolean;
+  keyPrefix: string;
 }
 
-export const I18nContext = createContext<I18nContextValue | undefined>(
-  undefined,
-);
+export const I18nContext = createContext<I18nContextValue>({
+  translations: {},
+  locale: "en",
+  keyPrefix: "",
+});
 
 export interface I18nProviderProps {
   children: ReactNode;
@@ -25,14 +25,11 @@ export function I18nProvider({
   children,
   translations = {},
   locale = "en",
-  defaultLocale = "ja",
-  isBuildMode = false,
 }: I18nProviderProps) {
   const contextValue: I18nContextValue = {
     translations,
     locale,
-    defaultLocale,
-    isBuildMode,
+    keyPrefix: "",
   };
 
   return (

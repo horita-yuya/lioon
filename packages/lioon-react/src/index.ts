@@ -1,29 +1,12 @@
-import {
-  type I18nOptions,
-  type I18nTagFunction,
-  type TranslationDict,
-  createI18n,
-} from "lioon-core";
+import { type I18n, createI18n } from "lioon-core";
 import { useContext } from "react";
-import { I18nContext } from "./context";
+import { I18nContext } from "./I18nProvider.tsx";
 
-export { I18nProvider } from "./context";
-export type { I18nOptions, I18nTagFunction, TranslationDict };
+export { I18nProvider } from "./I18nProvider.tsx";
+export { I18n } from "./I18n.tsx";
 
-export function useI18n(options: Partial<I18nOptions> = {}): I18nTagFunction {
+export function useI18n(): I18n {
   const context = useContext(I18nContext);
 
-  if (!context) {
-    return createI18n(options);
-  }
-
-  const { translations, locale, defaultLocale, isBuildMode } = context;
-
-  return createI18n({
-    translations,
-    locale,
-    defaultLocale,
-    isBuildMode,
-    ...options,
-  });
+  return createI18n(context.translations, context.locale, context.keyPrefix);
 }

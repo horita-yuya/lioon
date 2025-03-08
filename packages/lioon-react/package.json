@@ -8,7 +8,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "watch": "tsup src/index.ts --watch",
+    "watch": "tsup src/index.ts --watch --format esm --dts",
     "test": "vitest run"
   },
   "dependencies": {
