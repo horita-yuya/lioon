@@ -14,7 +14,7 @@ export default defineConfig({
     tailwindcss(),
     lioonVitePlugin({
       outputDir: "src/i18n",
-      supportedLocales: ["en", "ja"],
+      supportedLocales: ["en", "ja", "ko", "zh", "es"],
     }),
   ],
   resolve: {
