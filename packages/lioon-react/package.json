@@ -1,0 +1,30 @@
+{
+  "name": "lioon-react",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup src/index.ts --watch",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "lioon-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}

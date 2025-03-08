@@ -1,0 +1,21 @@
+{
+  "name": "lioon",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm -r build",
+    "test": "vitest run",
+    "format": "biome format --write",
+    "watch:core": "pnpm --filter lioon-core run watch"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.8",
+    "tsup": "^8.0.1"
+  }
+}
