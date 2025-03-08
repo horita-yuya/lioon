@@ -8,10 +8,16 @@ export default function lioonVitePlugin(): PluginOption {
 
       const regex = /i18n`([^`]+)`/g;
       const keys: string[] = [];
-      let match;
+      let match: RegExpMatchArray | null;
 
-      while ((match = regex.exec(code))) {
-        keys.push(match[1].replace(/\${[^}]+}/g, "{}"));
+      while (true) {
+        match = regex.exec(code);
+
+        if (match) {
+          keys.push(match[1].replace(/\${[^}]+}/g, "{}"));
+        } else {
+          break;
+        }
       }
 
       if (keys.length > 0) {

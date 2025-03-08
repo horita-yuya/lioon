@@ -6,6 +6,7 @@
   "scripts": {
     "dev:react": "pnpm --filter lioon-react-sample run dev",
     "test": "vitest run",
+    "lint": "biome lint",
     "format": "biome format --write",
     "watch:core": "pnpm --filter lioon-core run watch",
     "watch:react": "pnpm --filter lioon-react run watch"
