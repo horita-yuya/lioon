@@ -1,12 +1,12 @@
 import type { TranslationDict } from "lioon-core";
 import { type PropsWithChildren, createContext, useContext } from "react";
 
-type I18nContextValue = {
-  translations: TranslationDict;
-  locale: string | undefined;
+type I18nContextValue<Locale extends string> = {
+  translations: TranslationDict<Locale>;
+  locale: Locale | undefined;
 };
 
-const I18nContext = createContext<I18nContextValue>({
+const I18nContext = createContext<I18nContextValue<"default">>({
   translations: {
     default: {},
   },
@@ -14,7 +14,7 @@ const I18nContext = createContext<I18nContextValue>({
 });
 
 type I18nProviderProps<Locale extends string> = {
-  translations: TranslationDict;
+  translations: TranslationDict<Locale>;
   locale?: Locale;
 };
 
@@ -26,7 +26,9 @@ export function I18nProvider<Locale extends string>({
   return (
     <I18nContext.Provider
       value={{
+        // @ts-ignore
         translations,
+        // @ts-ignore
         locale,
       }}
     >

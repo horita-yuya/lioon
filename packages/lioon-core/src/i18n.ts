@@ -3,15 +3,15 @@ export type I18n = (
   ...values: unknown[]
 ) => string;
 
-export type TranslationDict = {
-  [locale: string]: {
+export type TranslationDict<Locale extends string> = {
+  [locale in Locale]: {
     [key: string]: string;
   };
 };
 
-export function createI18n(
-  translations: TranslationDict,
-  locale: string,
+export function createI18n<Locale extends string>(
+  translations: TranslationDict<Locale>,
+  locale: Locale,
 ): I18n {
   return (strings: TemplateStringsArray, ...values: unknown[]): string => {
     const template = strings.raw.join("{{}}").trim();

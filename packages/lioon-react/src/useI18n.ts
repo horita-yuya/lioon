@@ -4,7 +4,6 @@ import { useI18nContext } from "./I18nProvider.tsx";
 export function useI18n(): { i18n: I18n } {
   const context = useI18nContext();
 
-  console.log(context.translations);
   return {
     i18n: createI18n(context.translations, context.locale ?? "default"),
   };
