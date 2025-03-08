@@ -10,33 +10,85 @@ You are professional typescript engineer. Also, you are multilingual.
 
 # lioon API design
 
-Implement i18n tag function.
-I will use this function in React like 
+lioon API has three main components, useI18n, DynamicI18n, and LioonProvider.
 
+- useI18n: Hook to get i18n and dynamicI18n functions.
+  - i18n: Function to translate static string.
+    - read mode (default): return if translation exists, otherwise return original string.
+    - write mode: write texts into translation file.
+  - dynamicI18n: Function to translate string dynamically, or in runtime.
+    - send requests to server to get translation.
+- DynamicI18n: Component to translate string dynamically.
+  - render: React component to render translated string.
+- LioonProvider: Provider to set locale.
+  - locale: Current locale.
+  - supportedLocales: Supported locales.
+  - translateI18n: Function to translate string.
+    - send requests to server to get translation.
+    - Used by dynamicI18n and i18n in build mode.
 
-```
-function Component() {
-  const i18n = usei18n()
-  const count = 10;
+```typescript jsx
+import { useI18n, DynamicI18n } from "./index";
+
+function Sample() {
+  const { i18n, dynamicI18n } = useI18n()
+  const name = "Lioon"
+  const me = useMe()
+  const message = useMessage()
 
   return (
     <div>
-    <div>{i18n`こんにちは`}</div>
-    <div>{i18n`木が ${count}本あります`}</div>
+      <h1>
+        {/* Static Translation */}
+        {i18n`Hello`}
+      </h1>
+      <p>
+        {/* Static Translation with variables */}
+        {i18n`Welcome to ${name}`}
+      </p>
+      <p>
+        {i18n`Nice to meet you, ${dynamicI18n(me.name)}`}
+      </p>
+      {/* Same as <p>{dynamicI18n(message)}</p> */}
+      <DynamicI18n render={<p/>}>
+        {message}
+      </DynamicI18n>
+      <button>
+        {i18n`Click me`}
+      </button>
     </div>
   )
 }
+
+// static i18n file format
+// default.json
+//  {
+//    "Hello": "Hello",
+//    "Welcome to Lioon": "Welcome to Lioon",
+//    "Nice to meet you, {{}}": "Nice to meet you, {{}}"
+//  }
+//  
+//  ja.json
+//  {
+//    "Hello": "こんにちは",
+//    "Welcome to Lioon": "Lioonへようこそ",
+//    "Nice to meet you, {{}}": "{{}}}さん、はじめまして"
+//  }
+
+function App() {
+  return (
+    <LioonProvider 
+      locale="ja"
+      supportedLocales={["en", "ja"]}
+      translateI18n={async (text: string) => {
+        return await fetch(`/api/translate?text=${text}`).then(res => res.json()) as { text: string, translated: string }
+      }}
+    >
+      <Sample/>
+    </LioonProvider>
+  )
+}
 ```
-
-i18n works in two mode.
-1. node build mode.
-This exposes key-value file to somewhere.
-
-- key: `${Component name}${こんにちは}`
-- value: ja, en value
-
-2. web runtime mode.
-- return translated string.
 
 # Testing
 - Use vitest

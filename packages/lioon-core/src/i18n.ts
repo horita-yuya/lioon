@@ -4,70 +4,29 @@ export type I18n = (
 ) => string;
 
 export interface TranslationDict {
-  [key: string]: {
-    [locale: string]: string;
+  [locale: string]: {
+    [key: string]: string;
   };
 }
 
-export interface I18nOptions {
-  translations?: TranslationDict;
-  locale?: string;
-  defaultLocale?: string;
-  componentName?: string;
-  isBuildMode: boolean;
-}
+const BUILD_MODE = process.env.BUILD_MODE;
 
-export function createI18n(options: I18nOptions): I18n {
-  const {
-    translations = {},
-    locale = "en",
-    defaultLocale = "ja",
-    componentName = "Unknown",
-    isBuildMode = false,
-  } = options;
-
-  const collectedTranslations: TranslationDict = {};
-
+export function createI18n(
+  translations: TranslationDict,
+  locale: string,
+  keyPrefix: string,
+): I18n {
   return (strings: TemplateStringsArray, ...values: unknown[]): string => {
-    const key = createKey(componentName, strings);
+    const template = strings.raw.join("{{}}").trim();
+    const key = `${keyPrefix}${template}`;
 
-    if (isBuildMode) {
-      if (!collectedTranslations[key]) {
-        collectedTranslations[key] = {
-          [defaultLocale]: strings.raw.join("{{}}"),
-        };
-      }
-      return formatOriginalText(strings, values);
+    if (BUILD_MODE) {
+      return template;
     } else {
-      const translatedTemplate =
-        translations[key]?.[locale] ||
-        translations[key]?.[defaultLocale] ||
-        strings.raw.join("{{}}");
-
+      const translatedTemplate = translations[key]?.[locale] || template;
       return formatTemplateWithValues(translatedTemplate, values);
     }
   };
-}
-
-function createKey(
-  componentName: string,
-  strings: TemplateStringsArray,
-): string {
-  return `${componentName}${strings.raw.join("{{}}").trim()}`;
-}
-
-function formatOriginalText(
-  strings: TemplateStringsArray,
-  values: unknown[],
-): string {
-  if (values.length === 0) return strings[0];
-
-  let result = strings[0];
-  for (let i = 0; i < values.length; i++) {
-    result += values[i] + strings[i + 1];
-  }
-
-  return result;
 }
 
 function formatTemplateWithValues(template: string, values: unknown[]): string {
@@ -81,8 +40,4 @@ function formatTemplateWithValues(template: string, values: unknown[]): string {
   }
 
   return result;
-}
-
-export function useI18n(options: I18nOptions): I18n {
-  return createI18n(options);
 }

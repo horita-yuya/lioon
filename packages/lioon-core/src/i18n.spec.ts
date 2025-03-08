@@ -3,13 +3,13 @@ import { createI18n, type TranslationDict } from './i18n';
 
 describe('i18n', () => {
   it('should return original text when no translation is available', () => {
-    const i18n = createI18n();
+    const i18n = createI18n({});
     const result = i18n`Hello, World!`;
     expect(result).toBe('Hello, World!');
   });
 
   it('should format strings with interpolated values', () => {
-    const i18n = createI18n();
+    const i18n = createI18n({});
     const count = 3;
     const result = i18n`There are ${count} trees`;
     expect(result).toBe('There are 3 trees');
