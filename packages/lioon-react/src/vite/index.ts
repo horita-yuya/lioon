@@ -23,6 +23,15 @@ export default function lioonVitePlugin<
     name: "vite-plugin-lioon",
 
     async transform(code, id) {
+      if (
+        !id.endsWith(".tsx") &&
+        !id.endsWith(".ts") &&
+        !id.endsWith(".jsx") &&
+        !id.endsWith(".js")
+      ) {
+        return code;
+      }
+
       const templates = parseCode(code).map((element) => element.template);
 
       if (templates.length > 0) {

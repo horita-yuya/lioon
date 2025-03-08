@@ -12,7 +12,7 @@ import { ChevronDown, Code, Globe, Package, Zap } from "lucide-react";
 export default function SamplePage({
   onClickLocale: handleLocaleChange,
 }: { onClickLocale: () => void }) {
-  const { i18n } = useI18n();
+  const { locale, i18n } = useI18n();
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,7 +50,7 @@ export default function SamplePage({
           <div className="flex items-center gap-4">
             <Button variant="outline" size="sm" onClick={handleLocaleChange}>
               <Globe className="mr-2 h-4 w-4" />
-              {i18n`currentLocale`}
+              {locale === "en" ? i18n`English` : i18n`Japanese`}
               <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
             <Button size="sm">{i18n`Get Started`}</Button>
@@ -161,9 +161,6 @@ function MyComponent() {
                     <Globe className="mr-2 h-4 w-4" />
                     {i18n`Change Locale`}
                   </Button>
-                </div>
-                <div className="p-6 border rounded-md bg-background">
-                  <SamplePage onClickLocale={handleLocaleChange} />
                 </div>
               </div>
             </div>
