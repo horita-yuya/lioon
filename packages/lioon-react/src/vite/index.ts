@@ -1,49 +1,57 @@
 import path from "node:path";
-import { collectI18nKeys, writeTranslation } from "lioon-core";
+import { parseCode, writeTranslation } from "lioon-core";
 import type { PluginOption } from "vite";
 
-export interface LioonVitePluginOptions {
-  outputDir?: string;
-  defaultLocale?: string;
-  supportedLocales?: string[];
-}
+export type LioonVitePluginOptions<
+  Template extends string,
+  Locales extends string,
+> = {
+  outputDir: string;
+  defaultLocale: NoInfer<Locales>;
+  supportedLocales: Locales[];
+  translate?: (
+    templates: Template[],
+  ) => Promise<[template: Template, { [locale in Locales]: string }][]>;
+};
 
-export default function lioonVitePlugin(
-  options: LioonVitePluginOptions = {},
-): PluginOption {
-  const {
-    outputDir = "src/i18n",
-    defaultLocale = "en",
-    supportedLocales = ["en"],
-  } = options;
+export default function lioonVitePlugin<
+  Template extends string,
+  Locales extends string,
+>(options: LioonVitePluginOptions<Template, Locales>): PluginOption {
+  const { outputDir, supportedLocales, translate } = options;
 
   return {
     name: "vite-plugin-lioon",
 
-    transform(code, id) {
-      if (!id.endsWith(".tsx") && !id.endsWith(".ts") && !id.endsWith(".jsx"))
-        return;
+    async transform(code, id) {
+      const templates = parseCode(code).map((element) => element.template);
 
-      const keys = collectI18nKeys(code);
-
-      console.log(keys);
-      if (keys.length > 0) {
+      if (templates.length > 0) {
         // Get absolute path for output directory based on project root
         const projectRoot = process.cwd();
         const absoluteOutputDir = path.isAbsolute(outputDir)
           ? outputDir
           : path.join(projectRoot, outputDir);
 
-        for (const key of keys) {
-          writeTranslation(key, key, {
-            outputDir: absoluteOutputDir,
-            defaultLocale,
-            supportedLocales,
+        if (translate) {
+          const translatedTemplates = await translate(templates as Template[]);
+          writeTranslation(absoluteOutputDir, translatedTemplates);
+        } else {
+          const defaultTemplates = templates.map((template) => {
+            const supported = Object.fromEntries(
+              supportedLocales.map((locale) => [locale, ""]),
+            );
+            return [
+              template,
+              { ...supported, [options.defaultLocale]: template },
+            ] as const;
           });
+
+          writeTranslation(absoluteOutputDir, defaultTemplates);
         }
 
         console.log(
-          `[lioon] Extracted ${keys.length} i18n keys from ${path.relative(projectRoot, id)}`,
+          `[lioon] Extracted ${templates.length} i18n keys from ${path.relative(projectRoot, id)}`,
         );
       }
 

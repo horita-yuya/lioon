@@ -1,58 +1,40 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export interface WriteTranslationOptions {
-  outputDir: string;
-  defaultLocale: string;
-  supportedLocales: string[];
-}
-
 export function writeTranslation(
-  key: string,
-  template: string,
-  options: WriteTranslationOptions,
+  outputDir: string,
+  values: Readonly<
+    [template: string, translation: Readonly<{ [locale: string]: string }>]
+  >[],
 ): void {
-  const { outputDir, defaultLocale, supportedLocales } = options;
-
-  // Create output directory if it doesn't exist
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // Process each supported locale
-  for (const locale of supportedLocales) {
-    const filePath = path.join(outputDir, `${locale}.json`);
-    let translations: Record<string, string> = {};
+  for (const [template, translation] of values) {
+    for (const locale of Object.keys(translation)) {
+      const filePath = path.join(outputDir, `${locale}.json`);
+      let translations: Record<string, string> = {};
 
-    // Load existing translations if file exists
-    if (fs.existsSync(filePath)) {
-      try {
+      if (fs.existsSync(filePath)) {
         const content = fs.readFileSync(filePath, "utf-8");
         translations = JSON.parse(content);
-      } catch (error) {
-        console.error(`Error reading translation file ${filePath}:`, error);
       }
-    }
 
-    if (!translations[key]) {
-      translations[key] = locale === defaultLocale ? template : template;
-    }
+      if (!translations[template]) {
+        translations[template] = translation[locale];
+      }
 
-    // Write back to file
-    try {
       fs.writeFileSync(
         filePath,
         JSON.stringify(translations, null, 2),
         "utf-8",
       );
-    } catch (error) {
-      console.error(`Error writing translation file ${filePath}:`, error);
     }
   }
 }
 
 export function extractI18nKey(template: string): string {
-  // Replace template expressions with placeholder
   return template.replace(/\${[^}]+}/g, "{{}}").trim();
 }
 
