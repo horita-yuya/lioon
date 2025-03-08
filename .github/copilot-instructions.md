@@ -90,6 +90,9 @@ function App() {
 }
 ```
 
+# Vite Plugin
+This plugin extracts i18n strings from source code and writes them into i18n files.
+
 # Testing
 - Use vitest
 - Create test file, as sibling of target file, like i18n.spec.ts.
