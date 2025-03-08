@@ -4,5 +4,12 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), lioonVitePlugin()],
+  plugins: [
+    react(),
+    lioonVitePlugin({
+      outputDir: "src/generated/i18n",
+      defaultLocale: "en",
+      supportedLocales: ["en", "ja"],
+    }),
+  ],
 });
