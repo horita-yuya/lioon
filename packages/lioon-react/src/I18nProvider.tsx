@@ -1,5 +1,5 @@
 import type { TranslationDict } from "lioon-core";
-import React, { createContext, type ReactNode } from "react";
+import { type ReactNode, createContext } from "react";
 
 export interface I18nContextValue {
   translations: TranslationDict;

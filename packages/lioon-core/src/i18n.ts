@@ -9,7 +9,8 @@ export interface TranslationDict {
   };
 }
 
-const BUILD_MODE = process.env.BUILD_MODE;
+const BUILD_MODE =
+  typeof process !== "undefined" ? process.env.BUILD_MODE : false;
 
 export function createI18n(
   translations: TranslationDict,

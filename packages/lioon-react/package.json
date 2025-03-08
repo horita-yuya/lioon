@@ -2,13 +2,14 @@
   "name": "lioon-react",
   "version": "1.0.0",
   "private": true,
+  "sideEffects": false,
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "watch": "tsup src/index.ts --watch --format esm --dts",
+    "watch": "tsup src/index.ts src/vite/index.ts --watch --format esm --dts",
     "test": "vitest run"
   },
   "dependencies": {
@@ -18,13 +19,17 @@
     "@types/react": "^18.3.1"
   },
   "peerDependencies": {
-    "react": "^18.3.1"
+    "react": "^18.3.1",
+    "vite": "^6.2.1"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite/index.d.ts",
+      "import": "./dist/vite/index.js"
     }
   }
 }
