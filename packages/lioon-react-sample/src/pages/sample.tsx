@@ -1,10 +1,10 @@
 import CodeBlock from "@/components/code-block.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
 } from "@/components/ui/tabs.tsx";
 import { useI18n } from "lioon-react";
 import { ChevronDown, Code, Globe, Package, Zap } from "lucide-react";
@@ -62,6 +62,17 @@ export default function SamplePage({
         {/* Hero Section */}
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
           <div className="container px-4 md:px-6">
+            {/* Logo Image - Centered with 300px size */}
+            <div className="flex justify-center mb-8">
+              <img 
+                src="/lioon.png" 
+                alt="Lioon Logo" 
+                width={300} 
+                height={300} 
+                className="object-contain"
+              />
+            </div>
+            
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="space-y-4">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
