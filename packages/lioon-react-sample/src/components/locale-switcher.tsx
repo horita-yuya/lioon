@@ -11,10 +11,10 @@ import { useI18n } from "lioon-react";
 import { Globe } from "lucide-react";
 
 interface LocaleSwitcherProps {
-  onClickLocale: (locale: string) => void;
+  onChange: (locale: string) => void;
 }
 
-export default function LocaleSwitcher({ onClickLocale }: LocaleSwitcherProps) {
+export default function LocaleSwitcher({ onChange }: LocaleSwitcherProps) {
   const { locale } = useI18n();
 
   const supportedLocales = [
@@ -26,13 +26,13 @@ export default function LocaleSwitcher({ onClickLocale }: LocaleSwitcherProps) {
   ];
 
   const handleLocaleChange = (localeCode: string) => {
-    onClickLocale(localeCode);
+    onChange(localeCode);
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="ghost" size="sm" className="gap-2">
           <Globe className="h-4 w-4" />
           <span>
             {supportedLocales.find((l) => l.code === locale)?.name || "English"}

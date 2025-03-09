@@ -7,19 +7,14 @@ import ja from "./i18n/ja.json";
 import ko from "./i18n/ko.json";
 import zh from "./i18n/zh.json";
 
+type Locale = "en" | "ja" | "ko" | "zh" | "es";
+
 export default function App() {
   const [locale, setLocale] = useState<"en" | "ja" | "ko" | "zh" | "es">("en");
-  
-  const handleLocaleChange = () => {
-    const locales: Array<"en" | "ja" | "ko" | "zh" | "es"> = ["en", "ja", "ko", "zh", "es"];
-    const currentIndex = locales.indexOf(locale);
-    const nextIndex = (currentIndex + 1) % locales.length;
-    setLocale(locales[nextIndex]);
-  };
 
   return (
     <I18nProvider translations={{ ja, en, ko, zh, es }} locale={locale}>
-      <SamplePage onClickLocale={handleLocaleChange} />
+      <SamplePage onClickLocale={(locale) => setLocale(locale as Locale)} />
     </I18nProvider>
   );
 }
