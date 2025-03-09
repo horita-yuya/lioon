@@ -9,6 +9,8 @@ export type TranslationDict<Locale extends string> = {
   };
 };
 
+export const BASE_LOCALE_NAME = "base";
+
 export function createI18n<Locale extends string>(
   translations: TranslationDict<Locale>,
   locale: Locale,

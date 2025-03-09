@@ -50,7 +50,7 @@
   "Type-Safe": "型安全",
   "Fully typed API for a better developer experience and fewer errors.": "より良い開発者体験とエラーの少ない完全に型付けされたAPI。",
   "API Reference": "APIリファレンス",
-  "useI18n": "useI18n",
+  "useLioon": "useLioon",
   "Hook to get i18n and dynamicI18n functions.": "i18nとdynamicI18n関数を取得するためのフック。",
   "DynamicI18n": "DynamicI18n",
   "Component to translate string dynamically.": "文字列を動的に翻訳するためのコンポーネント。",
@@ -78,7 +78,7 @@
   "Quick Start Guide": "クイックスタートガイド",
   "Get up and running with lioon-react in minutes.": "数分でlioon-reactを使い始めることができます。",
   "Basic Setup": "基本セットアップ",
-  "Wrap your application with the LioonProvider and start using the useI18n hook.": "アプリケーションをLioonProviderでラップし、useI18nフックの使用を開始します。",
+  "Wrap your application with the LioonProvider and start using the useLioon hook.": "",
   "Read Full Documentation": "完全なドキュメントを読む",
   "lioon-react": "lioon-react",
   "GitHub": "GitHub",
@@ -96,5 +96,10 @@
   "AI Integration": "AI統合",
   "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.": "LioonのAPIは、コンテキスト認識とセマンティック理解を備えたAI生成コンテンツを処理するように設計されています。",
   "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n": "LioonのAPIはAIシステムとシームレスに連携するよう設計されており、以下を実現します：\n  • AIモデルを使用した自動翻訳\n  • コンテンツ生成ワークフロー\n  • コンテキスト対応の翻訳\n  • コンテンツのセマンティック理解\n",
-  "lioon": "lioon"
+  "lioon": "lioon",
+  "Try it yourself": "",
+  "Input text to translate:": "",
+  "Refresh translation": "",
+  "Using dynamicI18n function:": "",
+  "Using DynamicI18n component:": ""
 }

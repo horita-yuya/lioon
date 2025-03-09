@@ -10,14 +10,15 @@ You are professional typescript engineer. Also, you are multilingual.
 
 # lioon API design
 
-lioon API has three main components, useI18n, DynamicI18n, and LioonProvider.
+lioon API has three main components, useLioon, DynamicI18n, and LioonProvider.
 
-- useI18n: Hook to get i18n and dynamicI18n functions.
+- useLioon: Hook to get i18n and dynamicI18n functions.
   - i18n: Function to translate static string.
     - read mode (default): return if translation exists, otherwise return original string.
     - write mode: write texts into translation file.
   - dynamicI18n: Function to translate string dynamically, or in runtime.
     - send requests to server to get translation.
+    - non async function while loading, it returns original string.
 - DynamicI18n: Component to translate string dynamically.
   - render: React component to render translated string.
 - LioonProvider: Provider to set locale.
@@ -28,10 +29,10 @@ lioon API has three main components, useI18n, DynamicI18n, and LioonProvider.
     - Used by dynamicI18n and i18n in build mode.
 
 ```typescript jsx
-import { useI18n, DynamicI18n } from "./index";
+import { useLioon, DynamicI18n } from "./index";
 
 function Sample() {
-  const { i18n, dynamicI18n } = useI18n()
+  const { i18n, dynamicI18n } = useLioon()
   const name = "Lioon"
   const me = useMe()
   const message = useMessage()
@@ -61,7 +62,7 @@ function Sample() {
 }
 
 // static i18n file format
-// default.json
+// base.json
 //  {
 //    "Hello": "Hello",
 //    "Welcome to Lioon": "Welcome to Lioon",

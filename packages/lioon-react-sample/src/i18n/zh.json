@@ -50,7 +50,7 @@
   "Type-Safe": "类型安全",
   "Fully typed API for a better developer experience and fewer errors.": "完全类型化的API，提供更好的开发体验和更少的错误。",
   "API Reference": "API参考",
-  "useI18n": "useI18n",
+  "useLioon": "useLioon",
   "Hook to get i18n and dynamicI18n functions.": "获取i18n和dynamicI18n函数的钩子。",
   "DynamicI18n": "DynamicI18n",
   "Component to translate string dynamically.": "动态翻译字符串的组件。",
@@ -78,7 +78,7 @@
   "Quick Start Guide": "快速入门指南",
   "Get up and running with lioon-react in minutes.": "几分钟内开始运行lioon-react。",
   "Basic Setup": "基本设置",
-  "Wrap your application with the LioonProvider and start using the useI18n hook.": "使用LioonProvider包装您的应用程序并开始使用useI18n钩子。",
+  "Wrap your application with the LioonProvider and start using the useLioon hook.": "",
   "Read Full Documentation": "阅读完整文档",
   "lioon-react": "lioon-react",
   "GitHub": "GitHub",
@@ -96,5 +96,10 @@
   "AI Integration": "AI集成",
   "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.": "Lioon的API旨在处理具有上下文感知和语义理解的AI生成内容。",
   "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n": "Lioon的API旨在与AI系统无缝协作，实现：\n  • 使用AI模型的自动翻译\n  • 内容生成工作流\n  • 上下文感知翻译\n  • 内容的语义理解\n",
-  "lioon": "lioon"
+  "lioon": "lioon",
+  "Try it yourself": "",
+  "Input text to translate:": "",
+  "Refresh translation": "",
+  "Using dynamicI18n function:": "",
+  "Using DynamicI18n component:": ""
 }

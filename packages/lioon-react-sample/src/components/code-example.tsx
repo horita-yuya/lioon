@@ -1,18 +1,18 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useI18n } from "@lioon/react";
+import { useLioon } from "@lioon/react";
 
 interface CodeExampleProps {
   className?: string;
 }
 
 export default function CodeExample({ className }: CodeExampleProps) {
-  const { i18n } = useI18n();
+  const { i18n } = useLioon();
 
-  const basicExample = `import { useI18n } from "@lioon/react";
+  const basicExample = `import { useLioon } from "@lioon/react";
 
 function Greeting() {
-  const { i18n } = useI18n();
+  const { i18n } = useLioon();
   const name = "Lioon";
   
   return (
@@ -23,10 +23,10 @@ function Greeting() {
   );
 }`;
 
-  const dynamicExample = `import { useI18n, DynamicI18n } from "@lioon/react";
+  const dynamicExample = `import { useLioon, DynamicI18n } from "@lioon/react";
 
 function UserGreeting() {
-  const { i18n, dynamicI18n } = useI18n();
+  const { i18n, dynamicI18n } = useLioon();
   const user = { name: "Alex" };
   const message = getMessage();
   

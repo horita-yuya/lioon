@@ -1,19 +1,20 @@
-import { parseCode, writeTranslation } from "@lioon/core";
+import { parseCode } from "@lioon/core";
+import { writeTranslation } from "@lioon/core/plugin";
 import path from "node:path";
 import type { PluginOption } from "vite";
 
 export type LioonVitePluginOptions<Locales extends string> = {
   outputDir: string;
   supportedLocales: Locales[];
-  translate?: (
+  staticTranslate?: (
     templates: string[],
   ) => Promise<[template: string, { [locale in Locales]: string }][]>;
 };
 
 export default function lioonVitePlugin<Locales extends string>(
-  options: LioonVitePluginOptions<Locales>
+  options: LioonVitePluginOptions<Locales>,
 ): PluginOption {
-  const { outputDir, supportedLocales, translate } = options;
+  const { outputDir, supportedLocales, staticTranslate } = options;
 
   return {
     name: "vite-plugin-lioon",
@@ -28,7 +29,7 @@ export default function lioonVitePlugin<Locales extends string>(
         return code;
       }
 
-      const templates = parseCode(code).map(element => element.template);
+      const templates = parseCode(code).map((element) => element.template);
 
       if (templates.length > 0) {
         const projectRoot = process.cwd();
@@ -36,15 +37,15 @@ export default function lioonVitePlugin<Locales extends string>(
           ? outputDir
           : path.join(projectRoot, outputDir);
 
-        if (translate) {
-          const translatedTemplates = await translate(templates);
+        if (staticTranslate) {
+          const translatedTemplates = await staticTranslate(templates);
           writeTranslation(absoluteOutputDir, translatedTemplates);
         } else {
-          const defaultTemplates = templates.map(template => {
+          const defaultTemplates = templates.map((template) => {
             const supported = Object.fromEntries(
               supportedLocales.map((locale) => [locale, ""]),
             );
-            return [template, { ...supported, default: template }] as const;
+            return [template, { ...supported, base: template }] as const;
           });
 
           writeTranslation(absoluteOutputDir, defaultTemplates);

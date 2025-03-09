@@ -50,7 +50,7 @@
   "Type-Safe": "Type-Safe",
   "Fully typed API for a better developer experience and fewer errors.": "Fully typed API for a better developer experience and fewer errors.",
   "API Reference": "API Reference",
-  "useI18n": "useI18n",
+  "useLioon": "useLioon",
   "Hook to get i18n and dynamicI18n functions.": "Hook to get i18n and dynamicI18n functions.",
   "DynamicI18n": "DynamicI18n",
   "Component to translate string dynamically.": "Component to translate string dynamically.",
@@ -78,7 +78,7 @@
   "Quick Start Guide": "Quick Start Guide",
   "Get up and running with lioon-react in minutes.": "Get up and running with lioon-react in minutes.",
   "Basic Setup": "Basic Setup",
-  "Wrap your application with the LioonProvider and start using the useI18n hook.": "Wrap your application with the LioonProvider and start using the useI18n hook.",
+  "Wrap your application with the LioonProvider and start using the useLioon hook.": "",
   "Read Full Documentation": "Read Full Documentation",
   "lioon-react": "lioon-react",
   "GitHub": "GitHub",
@@ -96,5 +96,10 @@
   "AI Integration": "AI Integration",
   "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.": "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.",
   "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n": "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n",
-  "lioon": "lioon"
+  "lioon": "lioon",
+  "Try it yourself": "",
+  "Input text to translate:": "",
+  "Refresh translation": "",
+  "Using dynamicI18n function:": "",
+  "Using DynamicI18n component:": ""
 }
