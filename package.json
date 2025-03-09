@@ -8,9 +8,9 @@
     "test": "vitest run",
     "lint": "biome lint",
     "format": "biome format --write",
-    "watch:core": "pnpm --filter lioon-core run watch",
-    "watch:react": "pnpm --filter lioon-react run watch",
-    "build:lp": "pnpm --filter lioon-core run build && pnpm --filter lioon-react run build && pnpm --filter lioon-react-sample run build"
+    "watch:core": "pnpm --filter @lioon/core run watch",
+    "watch:react": "pnpm --filter @lioon/react run watch",
+    "build:lp": "pnpm --filter @lioon/core run build && pnpm --filter @lioon/react run build && pnpm --filter lioon-react-sample run build"
   },
   "packageManager": "pnpm@9.15.0",
   "devDependencies": {

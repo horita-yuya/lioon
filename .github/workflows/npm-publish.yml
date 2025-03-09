@@ -20,13 +20,13 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Run tests
         run: pnpm test
-      
+
       - name: Build packages
         run: |
           pnpm --filter lioon-core run build
@@ -48,7 +48,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-      
+
       - name: Configure npm
         run: |
           cat > .npmrc << EOF
@@ -56,20 +56,20 @@ jobs:
           registry=https://registry.npmjs.org/
           provenance=true
           EOF
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Build package
         run: pnpm --filter lioon-core run build
-      
+
       - name: Verify npm authentication
         run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+
       - name: Publish to NPM
-        run: cd packages/lioon-core && npm publish --provenance --access public
+        run: cd packages/lioon-core && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -89,7 +89,7 @@ jobs:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-      
+
       - name: Configure npm
         run: |
           cat > .npmrc << EOF
@@ -97,18 +97,18 @@ jobs:
           registry=https://registry.npmjs.org/
           provenance=true
           EOF
-      
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Build package
         run: pnpm --filter lioon-react run build
-      
+
       - name: Verify npm authentication
         run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      
+
       - name: Publish to NPM
         run: cd packages/lioon-react && npm publish --provenance --access public
         env:
