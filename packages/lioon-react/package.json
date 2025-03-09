@@ -13,7 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "lioon-core": "^1.0.0"
+    "lioon-core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.1"
