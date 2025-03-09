@@ -1,5 +1,6 @@
-import { parseCode, writeTranslation } from "@lioon/core";
 import path from "node:path";
+import { parseCode } from "@lioon/core";
+import { writeTranslation } from "@lioon/core/plugin";
 import type { PluginOption } from "vite";
 
 export type LioonVitePluginOptions<Locales extends string> = {
@@ -11,7 +12,7 @@ export type LioonVitePluginOptions<Locales extends string> = {
 };
 
 export default function lioonVitePlugin<Locales extends string>(
-  options: LioonVitePluginOptions<Locales>
+  options: LioonVitePluginOptions<Locales>,
 ): PluginOption {
   const { outputDir, supportedLocales, translate } = options;
 
@@ -28,7 +29,7 @@ export default function lioonVitePlugin<Locales extends string>(
         return code;
       }
 
-      const templates = parseCode(code).map(element => element.template);
+      const templates = parseCode(code).map((element) => element.template);
 
       if (templates.length > 0) {
         const projectRoot = process.cwd();
@@ -40,7 +41,7 @@ export default function lioonVitePlugin<Locales extends string>(
           const translatedTemplates = await translate(templates);
           writeTranslation(absoluteOutputDir, translatedTemplates);
         } else {
-          const defaultTemplates = templates.map(template => {
+          const defaultTemplates = templates.map((template) => {
             const supported = Object.fromEntries(
               supportedLocales.map((locale) => [locale, ""]),
             );

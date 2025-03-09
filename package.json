@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:lp": "pnpm --filter lioon-react-sample run dev",
+    "dev:next": "pnpm --filter lioon-react-nextjs-sample run dev",
     "test": "vitest run",
     "lint": "biome lint",
     "format": "biome format --write",
