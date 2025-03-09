@@ -15,8 +15,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: https://registry.npmjs.org/
-          scope: '@lioon'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -41,9 +40,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: https://registry.npmjs.org/
-          scope: '@lioon'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
+      
+      - name: Configure npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          cat > .npmrc << EOF
+          registry=https://registry.npmjs.org/
+          always-auth=true
+          EOF
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -51,18 +57,15 @@ jobs:
       - name: Build package
         run: pnpm --filter lioon-core run build
       
-      - name: Setup npm authentication
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-          echo "@lioon:registry=https://registry.npmjs.org/" >> ~/.npmrc
-          npm whoami --registry https://registry.npmjs.org/
+      - name: Verify npm authentication
+        run: npm whoami
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Publish to NPM
         run: cd packages/lioon-core && npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-react:
     needs: publish-core
@@ -75,9 +78,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: https://registry.npmjs.org/
-          scope: '@lioon'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
+      
+      - name: Configure npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          cat > .npmrc << EOF
+          registry=https://registry.npmjs.org/
+          always-auth=true
+          EOF
       
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -85,15 +95,12 @@ jobs:
       - name: Build package
         run: pnpm --filter lioon-react run build
       
-      - name: Setup npm authentication
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-          echo "@lioon:registry=https://registry.npmjs.org/" >> ~/.npmrc
-          npm whoami --registry https://registry.npmjs.org/
+      - name: Verify npm authentication
+        run: npm whoami
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Publish to NPM
         run: cd packages/lioon-react && npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
