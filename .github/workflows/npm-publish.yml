@@ -1,8 +1,9 @@
 name: Publish to NPM
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -29,8 +30,7 @@ jobs:
 
       - name: Build packages
         run: |
-          pnpm --filter lioon-core run build
-          pnpm --filter lioon-react run build
+          pnpm build:package
 
   publish-core:
     needs: build
@@ -45,31 +45,18 @@ jobs:
           version: 9.15.0
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-
-      - name: Configure npm
-        run: |
-          cat > .npmrc << EOF
-          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-          registry=https://registry.npmjs.org/
-          provenance=true
-          EOF
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build package
-        run: pnpm --filter lioon-core run build
-
-      - name: Verify npm authentication
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm build:package
 
       - name: Publish to NPM
-        run: cd packages/lioon-core && npm publish --access public
+        run: cd packages/lioon-core && pnpm publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -86,30 +73,17 @@ jobs:
           version: 9.15.0
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-
-      - name: Configure npm
-        run: |
-          cat > .npmrc << EOF
-          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-          registry=https://registry.npmjs.org/
-          provenance=true
-          EOF
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build package
-        run: pnpm --filter lioon-react run build
-
-      - name: Verify npm authentication
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpm build:package
 
       - name: Publish to NPM
-        run: cd packages/lioon-react && npm publish --provenance --access public
+        run: cd packages/lioon-react && pnpm publish --no-git-checks --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

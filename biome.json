@@ -23,7 +23,7 @@
       "recommended": true,
       "style": { "noUselessElse": "off" },
       "correctness": { "noUnusedImports": "error" },
-      "a11y": { "useValidAnchor": "off" }
+      "a11y": { "useValidAnchor": "off", "noSvgWithoutTitle": "off" }
     }
   },
   "javascript": {

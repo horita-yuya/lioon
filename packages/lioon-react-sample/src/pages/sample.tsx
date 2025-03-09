@@ -274,7 +274,7 @@ function AITranslationExample() {
                   <h3>{i18n`Quick Start Guide`}</h3>
                   <p>{i18n`Get up and running with lioon-react in minutes.`}</p>
                   <pre className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
-                    <code>{`npm install lioon-react`}</code>
+                    <code>{"npm install @lioon/react"}</code>
                   </pre>
 
                   <h4>{i18n`Basic Setup`}</h4>
@@ -308,17 +308,29 @@ function AITranslationExample() {
 
           <div className="flex items-center gap-6">
             <Button variant="ghost" size="sm" asChild>
-              <a href="https://github.com/horita-yuya/lioon" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/horita-yuya/lioon"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {i18n`GitHub`}
               </a>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <a href="https://www.npmjs.com/package/@lioon/react" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.npmjs.com/package/@lioon/react"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {i18n`NPM`}
               </a>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <a href="https://lioon.dev/docs" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://lioon.dev/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {i18n`Documentation`}
               </a>
             </Button>
