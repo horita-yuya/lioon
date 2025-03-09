@@ -4,7 +4,7 @@
 
 A lightweight, type-safe internationalization (i18n) library for React applications with a simple template literal-based API.
 
-https://lioon.pages.dev/
+https://lioon.dev/
 
 ## Features
 

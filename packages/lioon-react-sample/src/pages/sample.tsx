@@ -40,15 +40,20 @@ export default function HomePage({
                 {i18n`Seamlessly integrate multilingual support into your React applications with powerful, type-safe internationalization that's AI-friendly by design.`}
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                <Button size="lg" className="rounded-full gap-2">
-                  {i18n`Get Started`} <ChevronDown className="h-4 w-4" />
+                <Button size="lg" className="rounded-full gap-2" asChild>
+                  <a href="https://lioon.dev/docs/getting-started">
+                    {i18n`Get Started`} <ChevronDown className="h-4 w-4" />
+                  </a>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
                   className="rounded-full gap-2"
+                  asChild
                 >
-                  {i18n`Documentation`} <Code className="h-4 w-4" />
+                  <a href="https://lioon.dev/docs">
+                    {i18n`Documentation`} <Code className="h-4 w-4" />
+                  </a>
                 </Button>
               </div>
             </div>
@@ -283,7 +288,9 @@ function AITranslationExample() {
   • Semantic understanding of your content
 `}</p>
 
-                  <Button className="mt-6">{i18n`Read Full Documentation`}</Button>
+                  <Button className="mt-6" asChild>
+                    <a href="https://lioon.dev/docs">{i18n`Read Full Documentation`}</a>
+                  </Button>
                 </div>
               </div>
             </TabsContent>
@@ -300,9 +307,21 @@ function AITranslationExample() {
           </div>
 
           <div className="flex items-center gap-6">
-            <Button variant="ghost" size="sm">{i18n`GitHub`}</Button>
-            <Button variant="ghost" size="sm">{i18n`NPM`}</Button>
-            <Button variant="ghost" size="sm">{i18n`Documentation`}</Button>
+            <Button variant="ghost" size="sm" asChild>
+              <a href="https://github.com/horita-yuya/lioon" target="_blank" rel="noopener noreferrer">
+                {i18n`GitHub`}
+              </a>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <a href="https://www.npmjs.com/package/@lioon/react" target="_blank" rel="noopener noreferrer">
+                {i18n`NPM`}
+              </a>
+            </Button>
+            <Button variant="ghost" size="sm" asChild>
+              <a href="https://lioon.dev/docs" target="_blank" rel="noopener noreferrer">
+                {i18n`Documentation`}
+              </a>
+            </Button>
           </div>
         </div>
       </footer>
