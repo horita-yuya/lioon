@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
@@ -32,6 +35,9 @@ jobs:
   publish-core:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
@@ -45,10 +51,10 @@ jobs:
       
       - name: Configure npm
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           cat > .npmrc << EOF
+          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
           registry=https://registry.npmjs.org/
-          always-auth=true
+          provenance=true
           EOF
       
       - name: Install dependencies
@@ -63,13 +69,16 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Publish to NPM
-        run: cd packages/lioon-core && npm publish --access public
+        run: cd packages/lioon-core && npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-react:
     needs: publish-core
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
@@ -83,10 +92,10 @@ jobs:
       
       - name: Configure npm
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           cat > .npmrc << EOF
+          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
           registry=https://registry.npmjs.org/
-          always-auth=true
+          provenance=true
           EOF
       
       - name: Install dependencies
@@ -101,6 +110,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Publish to NPM
-        run: cd packages/lioon-react && npm publish --access public
+        run: cd packages/lioon-react && npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
