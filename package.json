@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:react": "pnpm --filter lioon-react-sample run dev",
+    "dev:lp": "pnpm --filter lioon-react-sample run dev",
     "test": "vitest run",
     "lint": "biome lint",
     "format": "biome format --write",

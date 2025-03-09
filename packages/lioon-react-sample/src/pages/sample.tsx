@@ -1,314 +1,207 @@
-import CodeBlock from "@/components/code-block.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs.tsx";
+"use client";
+
+import CodeExample from "@/components/code-example";
+import FeatureCard from "@/components/feature-card";
+import LocaleSwitcher from "@/components/locale-switcher";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useI18n } from "lioon-react";
 import { ChevronDown, Code, Globe, Package, Zap } from "lucide-react";
+import { useState } from "react";
 
-export default function SamplePage({
-  onClickLocale: handleLocaleChange,
+export default function HomePage({
+  onClickLocale,
 }: { onClickLocale: () => void }) {
-  const { locale, i18n } = useI18n();
+  const { i18n } = useI18n();
+  const [activeTab, setActiveTab] = useState("features");
+
+  const handleLocaleChange = () => {
+    onClickLocale();
+  };
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Globe className="h-6 w-6 text-primary" />
-            <span className="text-xl font-bold">lioon-react</span>
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-b from-background to-muted/30 pt-16 pb-24 px-4 md:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none" />
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-end mb-6">
+            <div className="flex items-center gap-2 bg-card/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm border border-border/50">
+              <Globe className="h-4 w-4 text-primary" />
+              <LocaleSwitcher onChange={handleLocaleChange} />
+            </div>
           </div>
-          <nav className="hidden md:flex gap-6">
-            <a
-              href="#features"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {i18n`Features`}
-            </a>
-            <a
-              href="#demo"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {i18n`Demo`}
-            </a>
-            <a
-              href="#installation"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {i18n`Installation`}
-            </a>
-            <a
-              href="#docs"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {i18n`Documentation`}
-            </a>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" onClick={handleLocaleChange}>
-              <Globe className="mr-2 h-4 w-4" />
-              {locale === "en" ? i18n`English` : i18n`Japanese`}
-              <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-            <Button size="sm">{i18n`Get Started`}</Button>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+                {i18n`Modern Internationalization`}
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground">
+                {i18n`Seamlessly integrate multilingual support into your React applications with powerful, type-safe internationalization.`}
+              </p>
+              <div className="flex flex-wrap gap-4 pt-4">
+                <Button size="lg" className="rounded-full gap-2">
+                  {i18n`Get Started`} <ChevronDown className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full gap-2"
+                >
+                  {i18n`Documentation`} <Code className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            <div className="bg-card rounded-xl border border-border/50 shadow-lg p-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-bl-full" />
+              <CodeExample className="bg-transparent" />
+            </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-          <div className="container px-4 md:px-6">
-            {/* Logo Image - Centered with 300px size */}
-            <div className="flex justify-center mb-8">
-              <img 
-                src="/lioon.png" 
-                alt="Lioon Logo" 
-                width={300} 
-                height={300} 
-                className="object-contain"
-              />
+      {/* Main Content */}
+      <section className="flex-1 px-4 py-16 md:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <Tabs
+            defaultValue={activeTab}
+            onValueChange={setActiveTab}
+            className="space-y-8"
+          >
+            <div className="flex justify-center">
+              <TabsList className="bg-muted/50 p-1 rounded-full">
+                <TabsTrigger
+                  value="features"
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  {i18n`Features`}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="examples"
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  {i18n`Examples`}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="documentation"
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                >
+                  {i18n`Documentation`}
+                </TabsTrigger>
+              </TabsList>
             </div>
-            
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="space-y-4">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  {i18n`Simple i18n for React Applications`}
-                </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  {i18n`Lioon-react makes internationalization easy with a simple, template literal-based API that works seamlessly with your React components.`}
-                </p>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button size="lg">{i18n`Get Started`}</Button>
-                  <Button variant="outline" size="lg">
-                    <Code className="mr-2 h-4 w-4" />
-                    {i18n`View on GitHub`}
-                  </Button>
-                </div>
-              </div>
-              <div className="rounded-lg border bg-card p-6 shadow-sm">
-                <CodeBlock
-                  code={`import { useI18n } from "use-i18n";
 
-function MyComponent() {
-  const { i18n } = useI18n();
-  const count = 42;
-  
-  return (
-    <p>{i18n\`You have \${count} messages\`}</p>
-  );
-}`}
+            <TabsContent
+              value="features"
+              className="space-y-12 animate-in fade-in-50"
+            >
+              <div className="text-center space-y-4 max-w-3xl mx-auto">
+                <h2 className="text-3xl font-bold">{i18n`Powerful Features`}</h2>
+                <p className="text-muted-foreground">
+                  {i18n`Everything you need to build multilingual applications with ease.`}
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <FeatureCard
+                  icon={<Globe className="h-6 w-6 text-primary" />}
+                  title={i18n`Dynamic Translation`}
+                  description={i18n`Translate content on-the-fly with runtime translations that adapt to your users' needs.`}
+                />
+                <FeatureCard
+                  icon={<Zap className="h-6 w-6 text-primary" />}
+                  title={i18n`Type-Safe`}
+                  description={i18n`Full TypeScript support with type inference for a robust development experience.`}
+                />
+                <FeatureCard
+                  icon={<Package className="h-6 w-6 text-primary" />}
+                  title={i18n`Zero Dependencies`}
+                  description={i18n`Lightweight and efficient with no external dependencies to slow you down.`}
+                />
+                <FeatureCard
+                  icon={<Code className="h-6 w-6 text-primary" />}
+                  title={i18n`Template Literals`}
+                  description={i18n`Use familiar template literals syntax for a natural translation experience.`}
+                />
+                <FeatureCard
+                  icon={<ChevronDown className="h-6 w-6 text-primary" />}
+                  title={i18n`Automatic Extraction`}
+                  description={i18n`Extract translation strings directly from your code with our build plugins.`}
+                />
+                <FeatureCard
+                  icon={<Globe className="h-6 w-6 text-primary" />}
+                  title={i18n`Multiple Locales`}
+                  description={i18n`Support for unlimited languages with easy switching between locales.`}
                 />
               </div>
-            </div>
-          </div>
-        </section>
+            </TabsContent>
 
-        {/* Features Section */}
-        <section id="features" className="w-full py-12 md:py-24 bg-background">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{i18n`Features`}</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  {i18n`Everything you need to internationalize your React application`}
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12">
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-primary/10 p-3">
-                  <Zap className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">{i18n`Simple API`}</h3>
-                <p className="text-center text-muted-foreground">
-                  {i18n`Use template literals for easy string interpolation and formatting`}
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-primary/10 p-3">
-                  <Globe className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">{i18n`Multiple Locales`}</h3>
-                <p className="text-center text-muted-foreground">
-                  {i18n`Support for any number of languages with easy switching`}
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-2 rounded-lg border p-6 shadow-sm">
-                <div className="rounded-full bg-primary/10 p-3">
-                  <Package className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold">{i18n`Lightweight`}</h3>
-                <p className="text-center text-muted-foreground">{i18n`Minimal bundle size with zero dependencies`}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Demo Section */}
-        <section id="demo" className="w-full py-12 md:py-24 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  {i18n`See it in action`}
-                </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  {i18n`Try switching the language to see how lioon-react works`}
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto max-w-3xl mt-12">
-              <div className="rounded-lg border bg-card p-6 shadow-sm">
-                <div className="flex justify-end mb-4">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLocaleChange}
-                  >
-                    <Globe className="mr-2 h-4 w-4" />
-                    {i18n`Change Locale`}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Installation Section */}
-        <section
-          id="installation"
-          className="w-full py-12 md:py-24 bg-background"
-        >
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  {i18n`Installation & Usage`}
-                </h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  {i18n`Get started with lioon-react in minutes`}
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto max-w-3xl mt-12">
-              <Tabs defaultValue="npm">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="npm">npm</TabsTrigger>
-                  <TabsTrigger value="yarn">yarn</TabsTrigger>
-                  <TabsTrigger value="pnpm">pnpm</TabsTrigger>
-                </TabsList>
-                <TabsContent value="npm" className="mt-4">
-                  <div className="rounded-lg bg-muted p-4">
-                    <code className="text-sm font-mono">
-                      npm install lioon-react
-                    </code>
-                  </div>
-                </TabsContent>
-                <TabsContent value="yarn" className="mt-4">
-                  <div className="rounded-lg bg-muted p-4">
-                    <code className="text-sm font-mono">
-                      yarn add lioon-react
-                    </code>
-                  </div>
-                </TabsContent>
-                <TabsContent value="pnpm" className="mt-4">
-                  <div className="rounded-lg bg-muted p-4">
-                    <code className="text-sm font-mono">
-                      pnpm add lioon-react
-                    </code>
-                  </div>
-                </TabsContent>
-              </Tabs>
-
-              <div className="mt-8 space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold mb-4">{i18n`1. Set up the provider`}</h3>
-                  <div className="rounded-lg border bg-card p-4 shadow-sm">
-                    <CodeBlock
-                      code={`import { I18nProvider } from 'use-i18n';
-
-const messages = {
-  en: {
-    'Sample Page': 'Sample Page',
-    'Count: {0} and {1}': 'Count: {0} and {1}',
-    'Change Locale': 'Change Locale'
-  },
-  ja: {
-    'Sample Page': 'サンプルページ',
-    'Count: {0} and {1}': 'カウント: {0}と{1}',
-    'Change Locale': '言語を変更'
-  }
-};
-
-function App() {
-  return (
-    <I18nProvider defaultLocale="en" messages={messages}>
-      <YourApp />
-    </I18nProvider>
-  );
-}`}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold mb-4">{i18n`2. Use in your components`}</h3>
-                  <div className="rounded-lg border bg-card p-4 shadow-sm">
-                    <CodeBlock
-                      code={`import { useI18n } from 'use-i18n';
-
-function MyComponent() {
-  const { i18n } = useI18n();
-  const count = 42;
-  
-  return (
-    <div>
-      <p>{i18n\`Count: \${count} and \${'200'}\`}</p>
-      <button onClick={() => {
-        // Change the locale
-      }}}>
-        {i18n\`Change Locale\`}
-      </button>
-    </div>
-  );
-}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="w-full border-t py-6 md:py-0">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © 2025 lioon-react. {i18n`All rights reserved.`}
-          </p>
-          <div className="flex gap-4">
-            <a
-              href="#"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            <TabsContent
+              value="examples"
+              className="space-y-8 animate-in fade-in-50"
             >
-              GitHub
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground"
+              <div className="text-center space-y-4 max-w-3xl mx-auto">
+                <h2 className="text-3xl font-bold">{i18n`Code Examples`}</h2>
+                <p className="text-muted-foreground">
+                  {i18n`See how easy it is to implement internationalization in your projects.`}
+                </p>
+              </div>
+
+              <div className="grid gap-8">
+                <div className="bg-card rounded-xl border border-border/50 shadow-md p-6 overflow-hidden">
+                  <h3 className="text-xl font-semibold mb-4">{i18n`Basic Usage`}</h3>
+                  <CodeExample className="bg-muted/30" />
+                </div>
+                <div className="bg-card rounded-xl border border-border/50 shadow-md p-6 overflow-hidden">
+                  <h3 className="text-xl font-semibold mb-4">{i18n`Dynamic Translation`}</h3>
+                  <CodeExample className="bg-muted/30" />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent
+              value="documentation"
+              className="space-y-8 animate-in fade-in-50"
             >
-              npm
-            </a>
-            <a
-              href="#"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground"
-            >
-              {i18n`Documentation`}
-            </a>
+              <div className="text-center space-y-4 max-w-3xl mx-auto">
+                <h2 className="text-3xl font-bold">{i18n`Documentation`}</h2>
+                <p className="text-muted-foreground">
+                  {i18n`Comprehensive guides and API references to help you get started.`}
+                </p>
+              </div>
+
+              <div className="bg-card rounded-xl border border-border/50 shadow-md p-8">
+                <div className="prose prose-lg max-w-none dark:prose-invert">
+                  <h3>{i18n`Quick Start Guide`}</h3>
+                  <p>{i18n`Get up and running with lioon-react in minutes.`}</p>
+                  <pre className="bg-muted/30 p-4 rounded-lg overflow-x-auto">
+                    <code>{`npm install lioon-react`}</code>
+                  </pre>
+
+                  <h4>{i18n`Basic Setup`}</h4>
+                  <p>{i18n`Wrap your application with the LioonProvider and start using the useI18n hook.`}</p>
+
+                  <Button className="mt-6">{i18n`Read Full Documentation`}</Button>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-muted/30 border-t border-border py-8 px-4 md:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Globe className="h-5 w-5 text-primary" />
+            <span className="font-semibold">{i18n`lioon-react`}</span>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <Button variant="ghost" size="sm">{i18n`GitHub`}</Button>
+            <Button variant="ghost" size="sm">{i18n`NPM`}</Button>
+            <Button variant="ghost" size="sm">{i18n`Documentation`}</Button>
           </div>
         </div>
       </footer>
