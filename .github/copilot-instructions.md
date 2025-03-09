@@ -80,7 +80,7 @@ function App() {
     <LioonProvider 
       locale="ja"
       supportedLocales={["en", "ja"]}
-      translateI18n={async (text: string) => {
+      dynamicTranslate={async (text: string) => {
         return await fetch(`/api/translate?text=${text}`).then(res => res.json()) as { text: string, translated: string }
       }}
     >
@@ -90,8 +90,27 @@ function App() {
 }
 ```
 
-# Vite Plugin
+# Plugins
 This plugin extracts i18n strings from source code and writes them into i18n files.
+
+## Vite
+```typescript
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    react(),
+    lioonVitePlugin({
+      outputDir: "src/i18n",
+      supportedLocales: ["en", "ja", "ko", "zh", "es"],
+      staticTranslate: async (templates) => {
+        return templates.map((template) => {
+          return [template, { en: template, ja: template, ko: template, zh: template, es: template }]
+        })
+      },
+    }),
+  ],
+})
+```
 
 # Testing
 - Use vitest

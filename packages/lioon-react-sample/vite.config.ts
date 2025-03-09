@@ -6,9 +6,6 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  build: {
-    outDir: "lp",
-  },
   plugins: [
     react(),
     tailwindcss(),
