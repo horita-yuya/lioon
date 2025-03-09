@@ -1,4 +1,4 @@
-# lioon (Not Published Yet)
+# lioon
 
 ![Lioon logo](lioon.png)
 
@@ -14,35 +14,36 @@ https://lioon.pages.dev/
 - **Automatic Extraction**: Vite plugin to extract i18n keys from source code
 - **Dynamic Translation**: Support for both static and runtime translation
 - **Zero Dependencies**: Minimal bundle size for production
+- **NPM Provenance**: Verified source and build integrity
 
 ## Packages
 
 The lioon project consists of two main packages:
 
-- `lioon-core`: Core internationalization functionality
-- `lioon-react`: React integration with hooks and components
+- `@lioon/core`: Core internationalization functionality
+- `@lioon/react`: React integration with hooks and components
 
 ## Installation
 
 ```bash
 # npm
-npm install lioon-react
+npm install @lioon/react
 
 # yarn
-yarn add lioon-react
+yarn add @lioon/react
 
 # pnpm
-pnpm add lioon-react
+pnpm add @lioon/react
 ```
 
 ## Usage
 
 ### Basic Setup
 
-Set up the `I18nProvider` at the root of your application:
+Set up the `LioonProvider` at the root of your application:
 
 ```tsx
-import { I18nProvider } from 'lioon-react';
+import { LioonProvider } from '@lioon/react';
 import en from './i18n/en.json';
 import ja from './i18n/ja.json';
 
@@ -50,9 +51,16 @@ function App() {
   const [locale, setLocale] = useState<"en" | "ja">("en");
   
   return (
-    <I18nProvider translations={{ en, ja }} locale={locale}>
+    <LioonProvider 
+      locale={locale} 
+      supportedLocales={["en", "ja"]}
+      translateI18n={async (text) => {
+        return await fetch(`/api/translate?text=${text}`)
+          .then(res => res.json());
+      }}
+    >
       <YourApp />
-    </I18nProvider>
+    </LioonProvider>
   );
 }
 ```
@@ -60,19 +68,40 @@ function App() {
 ### Using the `useI18n` Hook
 
 ```tsx
-import { useI18n } from 'lioon-react';
+import { useI18n } from '@lioon/react';
 
-function MyComponent() {
-  const { i18n, locale } = useI18n();
-  const count = 42;
+function Greeting() {
+  const { i18n } = useI18n();
+  const name = "Lioon";
   
   return (
     <div>
       <h1>{i18n`Hello`}</h1>
-      <p>{i18n`You have ${count} messages`}</p>
-      <button onClick={() => toggleLocale()}>
-        {locale === "en" ? i18n`English` : i18n`Japanese`}
-      </button>
+      <p>{i18n`Welcome to ${name}`}</p>
+    </div>
+  );
+}
+```
+
+### Dynamic Translation
+
+For runtime translation of dynamic content:
+
+```tsx
+import { useI18n, DynamicI18n } from '@lioon/react';
+
+function UserGreeting() {
+  const { i18n, dynamicI18n } = useI18n();
+  const user = { name: "Alex" };
+  const message = getMessage();
+  
+  return (
+    <div>
+      <p>{i18n`Nice to meet you, ${dynamicI18n(user.name)}`}</p>
+      
+      <DynamicI18n render={<p/>}>
+        {message}
+      </DynamicI18n>
     </div>
   );
 }
@@ -86,17 +115,15 @@ The translation files follow a simple JSON format:
 // en.json
 {
   "Hello": "Hello",
-  "You have {{}} messages": "You have {{}} messages",
-  "English": "English",
-  "Japanese": "Japanese"
+  "Welcome to {{}}": "Welcome to {{}}",
+  "Nice to meet you, {{}}": "Nice to meet you, {{}}"
 }
 
 // ja.json
 {
   "Hello": "こんにちは",
-  "You have {{}} messages": "{{}}件のメッセージがあります",
-  "English": "英語",
-  "Japanese": "日本語"
+  "Welcome to {{}}": "{{}}へようこそ",
+  "Nice to meet you, {{}}": "{{}}さん、はじめまして"
 }
 ```
 
@@ -108,70 +135,57 @@ lioon comes with a Vite plugin for automatic extraction of i18n keys from your s
 // vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import lioonVitePlugin from 'lioon-react/vite';
+import lioonVitePlugin from '@lioon/react/vite';
 
 export default defineConfig({
   plugins: [
     react(),
     lioonVitePlugin({
       outputDir: 'src/i18n',
-      supportedLocales: ['en', 'ja'],
-      // Optional: Translate function for automatic translation
+      supportedLocales: ['en', 'ja', 'ko', 'zh', 'es'],
       translate: async (templates) => {
-        // Implement your translation logic here
-        // Return array of [template, { locale: translation }]
+        // Optional: Implement your translation logic here
+        return templates.map((template) => {
+          return [template, { 
+            en: template, 
+            ja: template, 
+            ko: template, 
+            zh: template, 
+            es: template 
+          }];
+        });
       }
     })
   ]
 });
 ```
 
-## Advanced Usage
+## Building from Source
 
-### Dynamic Translation
-
-For runtime translation of content:
-
-```tsx
-import { useI18n, DynamicI18n } from 'lioon-react';
-
-function MessageDisplay({ message }) {
-  const { i18n, dynamicI18n } = useI18n();
-  
-  return (
-    <div>
-      <p>{i18n`Nice to meet you, ${dynamicI18n(user.name)}`}</p>
-      
-      {/* Using the DynamicI18n component */}
-      <DynamicI18n render={<p />}>
-        {message}
-      </DynamicI18n>
-    </div>
-  );
-}
-```
-
-## Development
-
-Clone the repository and install dependencies:
+The project uses pnpm workspaces. To build from source:
 
 ```bash
-git clone https://github.com/your-username/lioon.git
+# Clone the repository
+git clone https://github.com/horita-yuya/lioon.git
 cd lioon
+
+# Install dependencies
 pnpm install
-```
 
-Run tests:
-
-```bash
+# Run tests
 pnpm test
+
+# Build all packages
+pnpm -r build
+
+# Run the sample application
+cd packages/lioon-react-sample
+pnpm dev
 ```
 
-Run the sample application:
+## Contributing
 
-```bash
-pnpm dev:react
-```
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## License
 
