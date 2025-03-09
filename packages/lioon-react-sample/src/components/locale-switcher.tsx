@@ -1,13 +1,11 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useI18n } from "@lioon/react";
+import { useLioon } from "@lioon/react";
 import { Globe } from "lucide-react";
 
 interface LocaleSwitcherProps {
@@ -15,7 +13,7 @@ interface LocaleSwitcherProps {
 }
 
 export default function LocaleSwitcher({ onChange }: LocaleSwitcherProps) {
-  const { locale } = useI18n();
+  const { locale } = useLioon();
 
   const supportedLocales = [
     { code: "en", name: "English" },

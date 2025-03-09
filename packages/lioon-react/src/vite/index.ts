@@ -44,7 +44,7 @@ export default function lioonVitePlugin<Locales extends string>(
             const supported = Object.fromEntries(
               supportedLocales.map((locale) => [locale, ""]),
             );
-            return [template, { ...supported, default: template }] as const;
+            return [template, { ...supported, base: template }] as const;
           });
 
           writeTranslation(absoluteOutputDir, defaultTemplates);

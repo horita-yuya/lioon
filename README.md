@@ -65,13 +65,13 @@ function App() {
 }
 ```
 
-### Using the `useI18n` Hook
+### Using the `useLioon` Hook
 
 ```tsx
-import { useI18n } from '@lioon/react';
+import { useLioon } from '@lioon/react';
 
 function Greeting() {
-  const { i18n } = useI18n();
+  const { i18n } = useLioon();
   const name = "Lioon";
   
   return (
@@ -88,10 +88,10 @@ function Greeting() {
 For runtime translation of dynamic content:
 
 ```tsx
-import { useI18n, DynamicI18n } from '@lioon/react';
+import { useLioon, DynamicI18n } from '@lioon/react';
 
 function UserGreeting() {
-  const { i18n, dynamicI18n } = useI18n();
+  const { i18n, dynamicI18n } = useLioon();
   const user = { name: "Alex" };
   const message = getMessage();
   
