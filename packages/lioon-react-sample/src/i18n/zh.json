@@ -96,5 +96,10 @@
   "AI Integration": "AI集成",
   "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.": "Lioon的API旨在处理具有上下文感知和语义理解的AI生成内容。",
   "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n": "Lioon的API旨在与AI系统无缝协作，实现：\n  • 使用AI模型的自动翻译\n  • 内容生成工作流\n  • 上下文感知翻译\n  • 内容的语义理解\n",
-  "lioon": "lioon"
+  "lioon": "lioon",
+  "Try it yourself": "",
+  "Input text to translate:": "",
+  "Refresh translation": "",
+  "Using dynamicI18n function:": "",
+  "Using DynamicI18n component:": ""
 }

@@ -96,5 +96,10 @@
   "AI Integration": "AI 통합",
   "Lioon's API is designed to handle AI-generated content with context awareness and semantic understanding.": "Lioon의 API는 맥락 인식 및 의미 이해와 함께 AI 생성 콘텐츠를 처리하도록 설계되었습니다.",
   "Lioon's API is designed to work seamlessly with AI systems, enabling:\n  • Automated translations using AI models\n  • Content generation workflows\n  • Context-aware translations\n  • Semantic understanding of your content\n": "Lioon의 API는 AI 시스템과 원활하게 작동하도록 설계되어 다음을 가능하게 합니다:\n  • AI 모델을 사용한 자동 번역\n  • 콘텐츠 생성 워크플로우\n  • 맥락 인식 번역\n  • 콘텐츠의 의미 이해\n",
-  "lioon": "lioon"
+  "lioon": "lioon",
+  "Try it yourself": "",
+  "Input text to translate:": "",
+  "Refresh translation": "",
+  "Using dynamicI18n function:": "",
+  "Using DynamicI18n component:": ""
 }

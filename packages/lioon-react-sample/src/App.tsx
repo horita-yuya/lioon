@@ -13,7 +13,33 @@ export default function App() {
   const [locale, setLocale] = useState<"en" | "ja" | "ko" | "zh" | "es">("en");
 
   return (
-    <LioonProvider translations={{ ja, en, ko, zh, es }} locale={locale}>
+    <LioonProvider
+      translations={{ ja, en, ko, zh, es }}
+      locale={locale}
+      dynamicTranslate={async (texts) => {
+        return await Promise.all(
+          texts.map(async (text) => {
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+            if (text === "Test") {
+              return {
+                original: text,
+                translated: "テスト",
+              };
+            } else if (text === "Hello") {
+              return {
+                original: text,
+                translated: "こんにちは",
+              };
+            } else {
+              return {
+                original: text,
+                translated: text,
+              };
+            }
+          }),
+        );
+      }}
+    >
       <SamplePage onClickLocale={(locale) => setLocale(locale as Locale)} />
     </LioonProvider>
   );

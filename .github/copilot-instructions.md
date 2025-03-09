@@ -18,6 +18,7 @@ lioon API has three main components, useLioon, DynamicI18n, and LioonProvider.
     - write mode: write texts into translation file.
   - dynamicI18n: Function to translate string dynamically, or in runtime.
     - send requests to server to get translation.
+    - non async function while loading, it returns original string.
 - DynamicI18n: Component to translate string dynamically.
   - render: React component to render translated string.
 - LioonProvider: Provider to set locale.

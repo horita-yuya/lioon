@@ -3,15 +3,30 @@ import FeatureCard from "@/components/feature-card";
 import LocaleSwitcher from "@/components/locale-switcher";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useLioon } from "@lioon/react";
-import { ChevronDown, Code, Globe, Package, Zap } from "lucide-react";
+import { DynamicI18n, useLioon } from "@lioon/react";
+import {
+  ChevronDown,
+  Code,
+  Globe,
+  Package,
+  RefreshCw,
+  Zap,
+} from "lucide-react";
 import { useState } from "react";
 
 export default function HomePage({
   onClickLocale: handleLocaleChange,
 }: { onClickLocale: (locale: string) => void }) {
-  const { i18n } = useLioon();
+  const { i18n, dynamicI18n } = useLioon();
   const [activeTab, setActiveTab] = useState("features");
+  const [userInput, setUserInput] = useState(
+    "Type something to translate dynamically",
+  );
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -226,7 +241,94 @@ export default function HomePage({
                 </div>
                 <div className="bg-card rounded-xl border border-border/50 shadow-md p-6 overflow-hidden">
                   <h3 className="text-xl font-semibold mb-4">{i18n`Dynamic Translation`}</h3>
-                  <CodeExample className="bg-muted/30" />
+                  <div className="bg-muted/30 rounded-lg p-4">
+                    <pre className="text-sm overflow-x-auto">
+                      <code>{`// Dynamic translation example
+import { useLioon, DynamicI18n } from "@lioon/react";
+
+function DynamicTranslationExample() {
+  const { dynamicI18n } = useLioon();
+  const [userInput, setUserInput] = useState("Type something to translate");
+  
+  return (
+    <div className="space-y-4">
+      {/* Using dynamicI18n function directly */}
+      <div>
+        <label>Input:</label>
+        <input 
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+      </div>
+      
+      <div>
+        <label>Dynamic translation (function):</label>
+        <p>{dynamicI18n(userInput)}</p>
+      </div>
+      
+      {/* Using DynamicI18n component */}
+      <div>
+        <label>Dynamic translation (component):</label>
+        <DynamicI18n render={<p className="font-bold" />}>
+          {userInput}
+        </DynamicI18n>
+      </div>
+    </div>
+  );
+}`}</code>
+                    </pre>
+                  </div>
+
+                  <div className="mt-6 bg-muted/20 rounded-lg p-6 border border-primary/10">
+                    <h4 className="text-lg font-medium mb-3">{i18n`Try it yourself`}</h4>
+
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-1">
+                          {i18n`Input text to translate:`}
+                        </label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={userInput}
+                            onChange={(e) => setUserInput(e.target.value)}
+                            className="flex-1 p-2 rounded-md border border-border bg-card"
+                          />
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            onClick={handleRefresh}
+                            title={i18n`Refresh translation`}
+                          >
+                            <RefreshCw className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-sm font-medium mb-1">
+                          {i18n`Using dynamicI18n function:`}
+                        </div>
+                        <div className="bg-card p-3 rounded-md border border-border">
+                          {dynamicI18n(userInput)}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="text-sm font-medium mb-1">
+                          {i18n`Using DynamicI18n component:`}
+                        </div>
+                        <div className="bg-card p-3 rounded-md border border-border">
+                          <DynamicI18n
+                            key={refreshKey}
+                            render={<p className="font-medium" />}
+                          >
+                            {userInput}
+                          </DynamicI18n>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="bg-card rounded-xl border border-border/50 shadow-md p-6 overflow-hidden">
                   <h3 className="text-xl font-semibold mb-4">{i18n`AI Integration`}</h3>
