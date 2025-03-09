@@ -1,12 +1,12 @@
 {
   "name": "lioon-react",
   "version": "1.0.0",
-  "private": true,
   "sideEffects": false,
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist", "package.json", "src"],
   "scripts": {
     "build": "tsup src/index.ts src/vite/index.ts --format esm --dts",
     "watch": "tsup src/index.ts src/vite/index.ts --watch --format esm --dts",
@@ -31,5 +31,22 @@
       "types": "./dist/vite/index.d.ts",
       "import": "./dist/vite/index.js"
     }
+  },
+  "description": "React bindings for Lioon internationalization",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "localization",
+    "react",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/horita-yuya/lioon.git",
+    "directory": "packages/lioon-react"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   }
 }

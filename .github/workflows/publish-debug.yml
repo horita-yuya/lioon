@@ -1,0 +1,93 @@
+name: Publish Debug
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Run tests
+        run: pnpm test
+      
+      - name: Build packages
+        run: |
+          pnpm --filter lioon-core run build
+          pnpm --filter lioon-react run build
+
+  publish-core:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build package
+        run: pnpm --filter lioon-core run build
+      
+      - name: Set version
+        run: cd packages/lioon-core && npm version --no-git-tag-version prerelease --preid=dev.$(date +%Y%m%d%H%M%S)
+      
+      - name: Publish to NPM
+        run: cd packages/lioon-core && npm publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  publish-react:
+    needs: publish-core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9.15.0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build package
+        run: pnpm --filter lioon-react run build
+      
+      - name: Set version
+        run: cd packages/lioon-react && npm version --no-git-tag-version prerelease --preid=dev.$(date +%Y%m%d%H%M%S)
+      
+      - name: Update core dependency version
+        run: |
+          CORE_VERSION=$(node -e "console.log(require('./packages/lioon-core/package.json').version)")
+          cd packages/lioon-react
+          npm pkg set dependencies.\"lioon-core\"="^$CORE_VERSION"
+      
+      - name: Publish to NPM
+        run: cd packages/lioon-react && npm publish --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
