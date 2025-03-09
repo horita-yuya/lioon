@@ -1,7 +1,7 @@
-import path from "node:path";
+import lioonVitePlugin from "@lioon/react/vite";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import lioonVitePlugin from "lioon-react/vite";
+import path from "node:path";
 import { defineConfig } from "vite";
 
 // https://vite.dev/config/

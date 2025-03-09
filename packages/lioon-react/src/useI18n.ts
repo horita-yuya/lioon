@@ -1,4 +1,4 @@
-import { type I18n, createI18n } from "lioon-core";
+import { type I18n, createI18n } from "@lioon/core";
 import { useI18nContext } from "./I18nProvider.tsx";
 
 export function useI18n(): { locale: string; i18n: I18n } {

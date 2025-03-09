@@ -1,5 +1,5 @@
 import SamplePage from "@/pages/sample.tsx";
-import { I18nProvider } from "lioon-react";
+import { I18nProvider } from "@lioon/react";
 import { useState } from "react";
 import en from "./i18n/en.json";
 import es from "./i18n/es.json";

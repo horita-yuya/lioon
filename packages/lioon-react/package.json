@@ -1,5 +1,5 @@
 {
-  "name": "lioon-react",
+  "name": "@lioon/react",
   "version": "1.0.0",
   "sideEffects": false,
   "type": "module",
@@ -13,7 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "lioon-core": "workspace:*"
+    "@lioon/core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.1"

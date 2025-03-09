@@ -5,7 +5,7 @@ import FeatureCard from "@/components/feature-card";
 import LocaleSwitcher from "@/components/locale-switcher";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useI18n } from "lioon-react";
+import { useI18n } from "@lioon/react";
 import { ChevronDown, Code, Globe, Package, Zap } from "lucide-react";
 import { useState } from "react";
 

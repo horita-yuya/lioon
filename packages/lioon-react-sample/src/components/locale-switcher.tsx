@@ -2,12 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useI18n } from "lioon-react";
+import { useI18n } from "@lioon/react";
 import { Globe } from "lucide-react";
 
 interface LocaleSwitcherProps {

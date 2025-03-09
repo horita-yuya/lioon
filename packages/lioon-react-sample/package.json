@@ -14,7 +14,7 @@
     "@radix-ui/react-tabs": "^1.1.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lioon-react": "workspace:*",
+    "@lioon/react": "workspace:*",
     "lucide-react": "^0.479.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

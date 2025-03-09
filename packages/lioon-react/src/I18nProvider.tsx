@@ -1,4 +1,4 @@
-import type { TranslationDict } from "lioon-core";
+import type { TranslationDict } from "@lioon/core";
 import { type PropsWithChildren, createContext, useContext } from "react";
 
 type I18nContextValue<Locale extends string> = {

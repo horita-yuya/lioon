@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+          scope: '@lioon'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -41,6 +42,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+          scope: '@lioon'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -49,8 +51,16 @@ jobs:
       - name: Build package
         run: pnpm --filter lioon-core run build
       
+      - name: Setup npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+          echo "@lioon:registry=https://registry.npmjs.org/" >> ~/.npmrc
+          npm whoami --registry https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      
       - name: Publish to NPM
-        run: cd packages/lioon-core && npm publish
+        run: cd packages/lioon-core && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -66,6 +76,7 @@ jobs:
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
+          scope: '@lioon'
           cache: 'pnpm'
       
       - name: Install dependencies
@@ -74,7 +85,15 @@ jobs:
       - name: Build package
         run: pnpm --filter lioon-react run build
       
+      - name: Setup npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+          echo "@lioon:registry=https://registry.npmjs.org/" >> ~/.npmrc
+          npm whoami --registry https://registry.npmjs.org/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      
       - name: Publish to NPM
-        run: cd packages/lioon-react && npm publish
+        run: cd packages/lioon-react && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
