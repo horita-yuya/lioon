@@ -1,5 +1,5 @@
 export type I18n = (
-  strings: TemplateStringsArray,
+  strings: TemplateStringsArray | string,
   ...values: unknown[]
 ) => string;
 
@@ -16,8 +16,8 @@ export function createI18n<Locale extends string>(
   locale: Locale,
   callback?: (template: string) => void
 ): I18n {
-  return (strings: TemplateStringsArray, ...values: unknown[]): string => {
-    const template = strings.raw.join("{{}}").trim();
+  return (strings: TemplateStringsArray | string, ...values: unknown[]): string => {
+    const template = typeof strings === "string" ? strings : strings.raw.join("{{}}").trim();
     const translatedTemplate = translations[locale]?.[template] || template;
     callback?.(template);
     return formatTemplateWithValues(translatedTemplate, values);
