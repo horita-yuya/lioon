@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLioonContext } from "./LioonProvider.tsx";
+import { useLioonContext } from "./LioonProvider";
 
 export function useLioon<Locale extends string = string>() {
   const {
