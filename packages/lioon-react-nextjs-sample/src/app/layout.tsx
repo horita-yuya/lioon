@@ -1,4 +1,5 @@
 import "./globals.css";
+import { LioonProvider } from "@lioon/react";
 
 export default function RootLayout({
   children,
@@ -7,7 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <LioonProvider translations={{}}>
+        <body>{children}</body>
+      </LioonProvider>
     </html>
   );
 }
