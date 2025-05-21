@@ -13,5 +13,6 @@ export function DynamicI18n({
   const { dynamicI18n } = useLioon();
   const translatedText = dynamicI18n(children);
 
+  // @ts-ignore
   return cloneElement(render, render.props, translatedText);
 }
