@@ -84,7 +84,7 @@ function useInternalLioon(): (template: string) => void {
       const tools = await import("@lioon/core/plugin");
       tools.writeTranslation(outputDir, supportedLocales.map(locale => ([
         template, {
-          [locale]: "",
+          [locale]: template,
         }
       ])))
     }
