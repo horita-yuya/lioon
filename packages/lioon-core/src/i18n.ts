@@ -19,7 +19,7 @@ export function createI18n<Locale extends string>(
   return (strings: TemplateStringsArray, ...values: unknown[]): string => {
     const template = strings.raw.join("{{}}").trim();
     const translatedTemplate = translations[locale]?.[template] || template;
-    callback?.(translatedTemplate);
+    callback?.(template);
     return formatTemplateWithValues(translatedTemplate, values);
   };
 }
