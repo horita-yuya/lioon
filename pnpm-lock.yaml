@@ -51,12 +51,6 @@ importers:
       '@lioon/core':
         specifier: workspace:*
         version: link:../lioon-core
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
     devDependencies:
       '@types/react':
         specifier: ^19.1.3
