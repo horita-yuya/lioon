@@ -14,10 +14,14 @@ export const BASE_LOCALE_NAME = "base";
 export function createI18n<Locale extends string>(
   translations: TranslationDict<Locale>,
   locale: Locale,
-  callback?: (template: string) => void
+  callback?: (template: string) => void,
 ): I18n {
-  return (strings: TemplateStringsArray | string, ...values: unknown[]): string => {
-    const template = typeof strings === "string" ? strings : strings.raw.join("{{}}").trim();
+  return (
+    strings: TemplateStringsArray | string,
+    ...values: unknown[]
+  ): string => {
+    const template =
+      typeof strings === "string" ? strings : strings.raw.join("{{}}").trim();
     const translatedTemplate = translations[locale]?.[template] || template;
     callback?.(template);
     return formatTemplateWithValues(translatedTemplate, values);

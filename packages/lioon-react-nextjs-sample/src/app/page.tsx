@@ -1,7 +1,10 @@
-"use client";
-import { useLioon } from "@lioon/react";
+import { L18n } from "@lioon/react";
 
-export default function Home() {
-  const { i18n } = useLioon();
-  return <div>{i18n`hello`}</div>;
+export default function Home({ num }: { num: number }) {
+  return (
+    <div>
+      <L18n>Hello</L18n>
+      <L18n>{`${num} Count`}</L18n>
+    </div>
+  );
 }

@@ -1,13 +1,5 @@
-import {
-  BASE_LOCALE_NAME,
-  createI18n,
-} from "@lioon/core";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { BASE_LOCALE_NAME, createI18n } from "@lioon/core";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLioonContext } from "./LioonProvider";
 
 export function useLioon<Locale extends string = string>() {
@@ -64,7 +56,7 @@ export function useLioon<Locale extends string = string>() {
       });
   });
 
-  const registerTemplate = useInternalLioon()
+  const registerTemplate = useInternalLioon();
 
   return {
     locale: locale as "base" | Locale,
@@ -80,13 +72,19 @@ function useInternalLioon(): (template: string) => void {
     const outputDir = process.env.LIOON_OUTPUT_DIR;
 
     if (outputDir) {
-      const supportedLocales = process.env.LIOON_LOCALES?.split(",").map(locale => locale.trim()) || [];
+      const supportedLocales =
+        process.env.LIOON_LOCALES?.split(",").map((locale) => locale.trim()) ||
+        [];
       const tools = await import("@lioon/core/plugin");
-      tools.writeTranslation(outputDir, supportedLocales.map(locale => ([
-        template, {
-          [locale]: template,
-        }
-      ])))
+      tools.writeTranslation(
+        outputDir,
+        supportedLocales.map((locale) => [
+          template,
+          {
+            [locale]: template,
+          },
+        ]),
+      );
     }
-  }, [])
+  }, []);
 }
