@@ -3,5 +3,6 @@
   "Hello": "Hello",
   "100 Count": "100 Count",
   "0 Count": "0 Count",
-  "undefined Count": "undefined Count"
+  "undefined Count": "undefined Count",
+  "{{}} Count": "{{}} Count"
 }

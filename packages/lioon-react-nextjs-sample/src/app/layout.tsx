@@ -1,5 +1,7 @@
 import "./globals.css";
 import { LioonProvider } from "@lioon/react";
+import ja from "../../i18n/ja.json";
+import en from "../../i18n/en.json";
 
 export default function RootLayout({
   children,
@@ -8,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <LioonProvider translations={{}}>
+      <LioonProvider translations={{ ja, en }} locale={"ja" as "ja" | "en"}>
         <body>{children}</body>
       </LioonProvider>
     </html>
